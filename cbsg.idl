@@ -1,0 +1,11 @@
+module CorbaCBSG
+{
+
+  interface CBSG
+  {
+    string createSentence();
+    string createWorkshop();
+    string createShortWorkshop();
+    string createFinancialReport();
+  };
+};

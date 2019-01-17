@@ -51,6 +51,22 @@ This will install the PolyORB libraries and utilities inside the `/opt/gnat` dir
 #### This project
 
 Now that we have PolyORB installed, let's compile our project.
+Two possibilities:
+* build everything
+* build each part independently
+
+To build everything at once, just use the aggregate GPRBuild project at the root.
+First, tell GPRBuild where it will find the CBSG sources
+```bash
+export ADA_PROJECT_PATH=/tmp/cbsg-src/
+```
+Then build
+```bash
+fred@Tatooine:~/Dev/Ada/distributed$ gprbuild
+```
+That's all.
+
+The following parts describe how to build each component.
 
 ##### Ada part
 

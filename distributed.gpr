@@ -1,0 +1,6 @@
+--  Aggregate project to build everything
+aggregate project Distributed is
+  for Project_Files use ("Ada/client/client.gpr", 
+			 "Ada/server/server.gpr", 
+			 "C++/client.gpr");
+end Distributed;

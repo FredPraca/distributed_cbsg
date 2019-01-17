@@ -25,7 +25,6 @@ begin
       Argv : CORBA.ORB.Arg_List := CORBA.ORB.Command_Line_Arguments;
  
    begin
-      -- Initialisation de notre bus sous le nom ORB
       -- Init of our bus named ORB
       CORBA.ORB.Init (CORBA.ORB.To_CORBA_String ("ORB"), Argv);
  
@@ -64,7 +63,7 @@ begin
          New_Line;
  
          --  And its shorter version, the corbaloc
-	 --  unfortunately, this is not supported by every ORB implementation
+	 --  unfortunately, corbaloc is not supported by every ORB implementation
          Put_Line
            ("'"
 	      & CORBA.To_Standard_String

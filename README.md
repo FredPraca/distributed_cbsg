@@ -23,6 +23,8 @@ First of all, you will need obviously an Ada compiler. At the moment, it has onl
 
 Then you will need PolyORB, you will find it just [there](https://github.com/AdaCore/PolyORB) on GitHub.
 
+If you want to build the C++ client, you will need OmniORB4.
+
 And finally, you will need the source code of the [Corporate Bullshit Generator](https://sourceforge.net/projects/cbsg/files/latest/download).
 
 ### Compilation
@@ -50,6 +52,8 @@ This will install the PolyORB libraries and utilities inside the `/opt/gnat` dir
 
 Now that we have PolyORB installed, let's compile our project.
 
+##### Ada part
+
 * Add the path of the *CBSG* GPRBuild project file to the GPRBuild projects path
 ```bash
 export ADA_PROJECT_PATH=/tmp/cbsg-src/
@@ -66,6 +70,18 @@ fred@Tatooine:~/Dev/Ada/distributed/Ada/client$ gprbuild
 ```
 
 The server and client are now ready !
+
+##### C++ part
+
+Optionally, you can build the C++ client to demonstrate the interoperability between languages.
+The building process is quite easy as it is handled by GPRBuild.
+
+```bash
+fred@Tatooine:~/Dev/Ada/distributed$ cd C++
+fred@Tatooine:~/Dev/Ada/distributed/C++$ gprbuild
+```
+
+The C++ client should be ready in the *bin* directory
 
 ## Run it !
 
@@ -84,10 +100,16 @@ fred@Tatooine:~/Dev/Ada/distributed/Ada/server$ bin/server
 This shows that your server is running and the distributed object (servant in CORBA terminology) is listening on *127.0.0.1*.
 This is enough to perform some tests with the client.
 
-To launch the client:
+To launch the Ada client:
 ```bash
 fred@Tatooine:~/Dev/Ada/distributed/Ada/client$ bin/client corbaloc:iiop:1.2@127.0.1.1:35587//000000011Te2b46508157ac343
 The generator said : Implication and value cross-pollinate our robust efficiency gain.
+```
+
+To launch the C++ client:
+```bash
+fred@Tatooine:~/Dev/Ada/distributed/Ada/client$ bin/client corbaloc:iiop:1.2@127.0.1.1:35587//000000011Te2b46508157ac343
+The generator said : The collaborative strategic thinking turbocharges a business model.
 ```
 
 ### Really distributed
@@ -105,5 +127,11 @@ Now, you are able to call the server with the client as before from a remote com
 Once again, we just have to use the *corbaloc* string to call the server as it contains both the address and port plus the object id.
 ```bash
 fred@Tatooine:~/Dev/Ada/distributed/Ada/client$ bin/client corbaloc:iiop:1.2@192.168.122.1:35407//000000011Tc89941b8157ac4fe
+The generator said : Efficiency-enabling agilities 24/7 accelerate our visionary brand pyramids up-front, while the project manager makes things happen from within the data.
+```
+
+The same for C++
+```bash
+fred@Tatooine:~/Dev/Ada/distributed/C++$ bin/client corbaloc:iiop:1.2@192.168.122.1:35407//000000011Tc89941b8157ac4fe
 The generator said : Efficiency-enabling agilities 24/7 accelerate our visionary brand pyramids up-front, while the project manager makes things happen from within the data.
 ```

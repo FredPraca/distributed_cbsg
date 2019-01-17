@@ -1,0 +1,36 @@
+project Client is
+
+  --  As git does not allow to record empty directory
+  --  We tell GprBuild to create missing directories
+  for Create_Missing_Dirs use "True";
+
+  --  We're building a C++ client
+  For Languages use ("C++");
+  
+  --  OmniORB generates files that are not using .h and .cpp suffix
+  --  So we override this
+  Package Naming is
+     For Implementation_Suffix("C++") use ".cc";
+     For Specification_Suffix("C++") use ".hh";
+  end Naming;
+  
+  --  Where the sources are
+  For Source_Dirs use ("src/**");
+
+  --  What to compile
+  For Source_Files use ("client.cc", "cbsgSK.cc");
+  
+  --  Use obj for... object files :)
+  for Object_Dir use "obj";
+
+  -- Use bin for bin file
+  for Exec_Dir use "bin";
+  
+  --  And declare what we are building
+  for Main use ("client.cc");
+  
+  --  We need to link to OmniORB, our chosen C++ ORB (but it might be any other Corba product)
+  package Linker is
+     For Trailing_Switches("C++") use ("-lomniORB4", "-lomnithread");
+  end Linker;
+end Client;

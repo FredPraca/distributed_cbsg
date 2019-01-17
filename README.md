@@ -59,8 +59,13 @@ export ADA_PROJECT_PATH=/tmp/cbsg-src/
 fred@Tatooine:~/Dev/Ada/distributed$ cd Ada/server/
 fred@Tatooine:~/Dev/Ada/distributed/Ada/server$ gprbuild
 ```
+* Then go to the Ada client directory and build it
+```bash
+fred@Tatooine:~/Dev/Ada/distributed$ cd Ada/client/
+fred@Tatooine:~/Dev/Ada/distributed/Ada/client$ gprbuild
+```
 
-The server is now ready !
+The server and client are now ready !
 
 ## Run it !
 
@@ -79,6 +84,12 @@ fred@Tatooine:~/Dev/Ada/distributed/Ada/server$ bin/server
 This shows that your server is running and the distributed object (servant in CORBA terminology) is listening on *127.0.0.1*.
 This is enough to perform some tests with the client.
 
+To launch the client:
+```bash
+fred@Tatooine:~/Dev/Ada/distributed/Ada/client$ bin/client corbaloc:iiop:1.2@127.0.1.1:35587//000000011Te2b46508157ac343
+The generator said : Implication and value cross-pollinate our robust efficiency gain.
+```
+
 ### Really distributed
 
 To definitly distribute our object, we need to tell which interface we are listening to:
@@ -90,3 +101,9 @@ fred@Tatooine:~/Dev/Ada/distributed/Ada/server$ POLYORB_IIOP_POLYORB_PROTOCOLS_I
 ```
 
 Now, you are able to call the server with the client as before from a remote computer, as long as the port, here 35407, is open.
+
+Once again, we just have to use the *corbaloc* string to call the server as it contains both the address and port plus the object id.
+```bash
+fred@Tatooine:~/Dev/Ada/distributed/Ada/client$ bin/client corbaloc:iiop:1.2@192.168.122.1:35407//000000011Tc89941b8157ac4fe
+The generator said : Efficiency-enabling agilities 24/7 accelerate our visionary brand pyramids up-front, while the project manager makes things happen from within the data.
+```

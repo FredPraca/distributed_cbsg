@@ -124,7 +124,7 @@ The generator said : Implication and value cross-pollinate our robust efficiency
 
 To launch the C++ client:
 ```bash
-fred@Tatooine:~/Dev/Ada/distributed/Ada/client$ bin/client corbaloc:iiop:1.2@127.0.1.1:35587//000000011Te2b46508157ac343
+fred@Tatooine:~/Dev/Ada/distributed/C++/client$ bin/client corbaloc:iiop:1.2@127.0.1.1:35587//000000011Te2b46508157ac343
 The generator said : The collaborative strategic thinking turbocharges a business model.
 ```
 

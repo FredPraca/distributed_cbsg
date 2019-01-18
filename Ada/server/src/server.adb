@@ -11,10 +11,11 @@ with PortableServer.POAManager;
 with CorbaCBSG.CBSG.Impl;
  
 with PolyORB.CORBA_P.CORBALOC;
- 
+with PolyORB.CORBA_P.Naming_Tools;
+
 -- Allow to specify how PolyORB should work
-with PolyORB.Setup.No_Tasking_Server;
-pragma Warnings (Off, PolyORB.Setup.No_Tasking_Server);
+with PolyORB.Setup.Thread_Per_Request_Server;
+pragma Warnings (Off, PolyORB.Setup.Thread_Per_Request_Server);
  
 procedure Server is
 begin
@@ -37,7 +38,10 @@ begin
  
 	 --  And its implementation
          Obj : constant CORBA.Impl.Object_Ptr := new CorbaCBSG.CBSG.Impl.Object;
- 
+	 
+	 --  And finally its name
+	 Obj_Name : constant String := "/cbsg/generator";
+	 
       begin
  
 	 --  We get the root POA of our bus
@@ -69,7 +73,12 @@ begin
 	      & CORBA.To_Standard_String
 	      (PolyORB.CORBA_P.CORBALOC.Object_To_Corbaloc (Ref))
 	      & "'");
- 
+	 
+	 --  Register it to Naming service
+	 PolyORB.CORBA_P.Naming_Tools.Register (Obj_Name, Ref, Rebind => True);
+	 
+	 Put_Line ("Generator rebound");
+	      
          --  Launch the server. CORBA.ORB.Run is supposed to never return,
          --  print a message if it does.
  

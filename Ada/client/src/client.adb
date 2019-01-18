@@ -1,12 +1,16 @@
 with Ada.Command_Line;
 with Ada.Text_IO;
 with CORBA.ORB;
- 
+
+with CORBA.Object;
+
 with CorbaCBSG.CBSG;
- 
+with CorbaCBSG.CBSG.Helper;
 with PolyORB.Setup.Client;
 pragma Warnings (Off, PolyORB.Setup.Client);
- 
+
+with PolyORB.CORBA_P.Naming_Tools;
+
 procedure Client is
    use Ada.Command_Line;
    use Ada.Text_IO;
@@ -14,25 +18,29 @@ procedure Client is
  
    Rcvd_Bullshits : CORBA.String;
    Bullshit_Generator : CorbaCBSG.CBSG.Ref;
- 
+   
+   Obj_Name : constant String := "/cbsg/generator";
+   
+   Obj : CORBA.Object.Ref;
+   
+   -- Allow to get the parameters according to the CORBA Standard
+   -- For example, InitialRef
+   Argv : CORBA.ORB.Arg_List := CORBA.ORB.Command_Line_Arguments;
+
 begin
-   CORBA.ORB.Initialize ("ORB");
-   if Argument_Count not in 1 .. 2 then
-      Put_Line
-        ("usage: client <IOR_string_from_server>");
-      return;
-   end if;
- 
-   --  Get the distributed object reference through its IOR or corbaloc
-   CORBA.ORB.String_To_Object
-     (CORBA.To_CORBA_String (Ada.Command_Line.Argument (1)), Bullshit_Generator);
- 
+   CORBA.ORB.Init (CORBA.ORB.To_CORBA_String ("ORB"), Argv);
+   
+   --  Locate the object through the Naming Service
+   Obj := PolyORB.CORBA_P.Naming_Tools.Locate (Obj_Name);
+   
+   Bullshit_Generator := CorbaCBSG.CBSG.Helper.To_Ref (obj);
+    
    --  Check that the reference is correct
    if CorbaCBSG.CBSG.Is_Nil(Bullshit_Generator) then
       Put_Line ("main : cannot invoke on a nil reference");
       return;
    end if;
-   
+
    --  Call a method
    Rcvd_Bullshits := CorbaCBSG.CBSG.createSentence(Bullshit_Generator);
    Put_Line ("The generator said : " & CORBA.To_Standard_String (Rcvd_Bullshits));

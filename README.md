@@ -105,49 +105,73 @@ By default, your server will run using the first available address. Usually it w
 
 ### Locally
 
+First of all, launch a CORBA name server. In our case, this might be the one of PolyORB or the one provided by OmniORB4.
+
+Start the one from PolyORB:
+```bash
+fred@tatooine:~$ po_cos_naming
+POLYORB_CORBA_NAME_SERVICE=IOR:010000002b00000049444c3a6f6d672e6f72672f436f734e616d696e672f4e616d696e67436f6e746578744578743a312e300000020000000000000068000000010102000a0000003132372e302e312e3100cd84270000004e616d65536572766963652f3030303030303032346646303030303030303038303030303030300001000000010000001c0000000100000001000100000000000001010002000000010101000201010003004f5044000000010100000a0000003132372e302e312e31008aa8270000004e616d65536572766963652f3030303030303032346646303030303030303038303030303030300000000000
+POLYORB_CORBA_NAME_SERVICE=corbaloc:iiop:1.2@127.0.1.1:33997/NameService/000000024fF0000000080000000
+```
+Our CORBA name server is ready for object registration.
+
 In your server directory, just run the server:
 ```bash
-fred@Tatooine:~/Dev/Ada/distributed/Ada/server$ bin/server
-'IOR:010000001700000049444c3a436f726261434253472f434253473a312e30000002000000000000005c000000010102000a0000003132372e302e312e3100038b1b0000002f30303030303030313154653262343635303831353761633334330001000000010000001c0000000100000001000100000000000001010002000000010101000201010003004f5038000000010100000a0000003132372e302e312e310025891b0000002f30303030303030313154653262343635303831353761633334330000000000'
+fred@Tatooine:~/Dev/Ada/distributed/Ada/server$ bin/server -ORBInitRef NameService=corbaloc:iiop:1.2@127.0.1.1:46867/NameService/000000024fF0000000080000000
+'IOR:010000001700000049444c3a436f726261434253472f434253473a312e30000002000000000000005c000000010102000a0000003132372e302e312e3100f1b61b0000002f30303030303030313154363638356331353530303030303637650001000000010000001c0000000100000001000100000000000001010002000000010101000201010003004f5038000000010100000a0000003132372e302e312e31009bd51b0000002f30303030303030313154363638356331353530303030303637650000000000'
 
-'corbaloc:iiop:1.2@127.0.1.1:35587//000000011Te2b46508157ac343'
+'corbaloc:iiop:1.2@127.0.1.1:46833//000000011T6685c1550000067e'
+Generator rebound
 ```
 
-This shows that your server is running and the distributed object (servant in CORBA terminology) is listening on *127.0.0.1*.
-This is enough to perform some tests with the client.
+This shows that your server is running and the distributed object (servant in CORBA terminology) is listening on *127.0.0.1*. It's also registered to the Name service.
+The *ORBInitRef* command line parameter is a standard one (see [Ciaran McHale page](http://www.ciaranmchale.com/corba-explained-simply/the-corbaloc-and-corbaname-urls.html#toc66) for more information).
 
-To launch the Ada client:
+This is enough to perform some tests with the client using the name service.
+
+To launch the Ada client, we use the same syntax to provide the path to the name service:
 ```bash
-fred@Tatooine:~/Dev/Ada/distributed/Ada/client$ bin/client corbaloc:iiop:1.2@127.0.1.1:35587//000000011Te2b46508157ac343
-The generator said : Implication and value cross-pollinate our robust efficiency gain.
+fred@Tatooine:~/Dev/Ada/distributed/Ada/client$ bin/client -ORBInitRef NameService=corbaloc:iiop:1.2@127.0.1.1:46867/NameService/000000024fF0000000080000000
+The generator said : It's not about connectivity. It's about our decision-to-execution cycle.
 ```
 
-To launch the C++ client:
+To launch the C++ client, we use exactly the same syntax as with Ada:
 ```bash
-fred@Tatooine:~/Dev/Ada/distributed/Ada/client$ bin/client corbaloc:iiop:1.2@127.0.1.1:35587//000000011Te2b46508157ac343
-The generator said : The collaborative strategic thinking turbocharges a business model.
+fred@Tatooine:~/Dev/Ada/distributed/C++/client$ bin/client bin/client -ORBInitRef NameService=corbaloc:iiop:1.2@127.0.1.1:46867/NameService/000000024fF0000000080000000
+The generator said : A multi-source, solution-oriented and well-scoped operating model carefully promotes the Executive Chief of Business Operations.
 ```
 
 ### Really distributed
 
-To definitly distribute our object, we need to tell which interface we are listening to:
+To definitly distribute our object, we need to tell which interface we are listening to.
+As the name service is a CORBA server providing a NameService servant, we start it by providing the listening address.
 ```bash
-fred@Tatooine:~/Dev/Ada/distributed/Ada/server$ POLYORB_IIOP_POLYORB_PROTOCOLS_IIOP_DEFAULT_ADDR=192.168.122.1 bin/server
-'IOR:010000001700000049444c3a436f726261434253472f434253473a312e300000020000000000000060000000010102000e0000003139322e3136382e3132322e31004f8a1b0000002f30303030303030313154633839393431623831353761633466650001000000010000001c0000000100000001000100000000000001010002000000010101000201010003004f5038000000010100000a0000003132372e302e312e3100b7991b0000002f30303030303030313154633839393431623831353761633466650000000000'
+fred@tatooine:~$ POLYORB_IIOP_POLYORB_PROTOCOLS_IIOP_DEFAULT_ADDR=192.168.122.1 po_cos_naming
+POLYORB_CORBA_NAME_SERVICE=IOR:010000002b00000049444c3a6f6d672e6f72672f436f734e616d696e672f4e616d696e67436f6e746578744578743a312e30000002000000000000006c000000010102000e0000003139322e3136382e3132322e3100a58d270000004e616d65536572766963652f3030303030303032346646303030303030303038303030303030300001000000010000001c0000000100000001000100000000000001010002000000010101000201010003004f5044000000010100000a0000003132372e302e312e31005d82270000004e616d65536572766963652f3030303030303032346646303030303030303038303030303030300000000000
+POLYORB_CORBA_NAME_SERVICE=corbaloc:iiop:1.2@192.168.122.1:36261/NameService/000000024fF0000000080000000
+```
+ Our name server is now listening on a specific address.
+ Please note that this command line is for PolyORB name service and might be different for other name servers as OmniORB4 one.
+ 
+ Then we launch our CBSG server:
+```bash
+fred@Tatooine:~/Dev/Ada/distributed/Ada/server$ POLYORB_IIOP_POLYORB_PROTOCOLS_IIOP_DEFAULT_ADDR=192.168.122.1 bin/server -ORBInitRef NameService=corbaloc:iiop:1.2@192.168.122.1:36261/NameService/000000024fF0000000080000000
+'IOR:010000001700000049444c3a436f726261434253472f434253473a312e30000002000000000000005c000000010102000a0000003132372e302e312e310019991b0000002f30303030303030313154643466653134383630303030303731320001000000010000001c0000000100000001000100000000000001010002000000010101000201010003004f5038000000010100000a0000003132372e302e312e310058b01b0000002f30303030303030313154643466653134383630303030303731320000000000'
 
-'corbaloc:iiop:1.2@192.168.122.1:35407//000000011Tc89941b8157ac4fe'
+'corbaloc:iiop:1.2@127.0.1.1:39193//000000011Td4fe148600000712'
+Generator rebound
 ```
 
-Now, you are able to call the server with the client as before from a remote computer, as long as the port, here 35407, is open.
+Now, you are able to call the server with the client as before from a remote computer, as long as the port, here 39193, is open.
 
-Once again, we just have to use the *corbaloc* string to call the server as it contains both the address and port plus the object id.
+We just have to launch with the path to the name server
 ```bash
-fred@Tatooine:~/Dev/Ada/distributed/Ada/client$ bin/client corbaloc:iiop:1.2@192.168.122.1:35407//000000011Tc89941b8157ac4fe
-The generator said : Efficiency-enabling agilities 24/7 accelerate our visionary brand pyramids up-front, while the project manager makes things happen from within the data.
+fred@Tatooine:~/Dev/Ada/distributed/Ada/client$ bin/client  -ORBInitRef NameService=corbaloc:iiop:1.2@192.168.122.1:36261/NameService/000000024fF0000000080000000
+The generator said : Machine intelligence, policy and sign-off inspire the game changers.
 ```
 
 The same for C++
 ```bash
-fred@Tatooine:~/Dev/Ada/distributed/C++$ bin/client corbaloc:iiop:1.2@192.168.122.1:35407//000000011Tc89941b8157ac4fe
-The generator said : Efficiency-enabling agilities 24/7 accelerate our visionary brand pyramids up-front, while the project manager makes things happen from within the data.
+fred@Tatooine:~/Dev/Ada/distributed/C++$ bin/client -ORBInitRef NameService=corbaloc:iiop:1.2@192.168.122.1:36261/NameService/000000024fF0000000080000000
+The generator said : Sizeable productivity improvement standardize a transitional market.
 ```

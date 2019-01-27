@@ -15,7 +15,7 @@ This application provides a CORBA server in Ada exposing the CBSG, an Ada client
 
 ## How to compile
 
-This paragraph describes what is needed to compile and how to compile.
+This paragraph describes what is needed to compile and how to compile under a Linux system. It has been tested with Ubuntu.
 
 ### Requirements
 

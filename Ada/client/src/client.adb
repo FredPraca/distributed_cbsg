@@ -8,7 +8,6 @@ with CorbaCBSG.CBSG;
 with CorbaCBSG.CBSG.Helper;
 with CorbaCBSG; use CorbaCBSG;
 
->>>>>>> master
 with PolyORB.Setup.Client;
 pragma Warnings (Off, PolyORB.Setup.Client);
 

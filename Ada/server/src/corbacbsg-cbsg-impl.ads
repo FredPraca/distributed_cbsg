@@ -17,6 +17,10 @@ package CorbaCBSG.CBSG.Impl is
 
    type Object_Ptr is
      access all Object'Class;
+   
+   function createTimestampedSentence
+     (Self : not null access Object)
+     return CorbaCBSG.Timestamped_Sentence;
 
    function createSentence
      (Self : not null access Object)

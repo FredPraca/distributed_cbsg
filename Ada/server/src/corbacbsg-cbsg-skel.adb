@@ -3,7 +3,7 @@ pragma Style_Checks ("NM32766");
 ---------------------------------------------------
 --  This file has been generated automatically from
 --  cbsg.idl
---  by IAC (IDL to Ada Compiler) 19.0w (rev. e4bac8d9).
+--  by IAC (IDL to Ada Compiler) 20.0w (rev. 90136cd4).
 ---------------------------------------------------
 --  NOTE: If you modify this file by hand, your
 --  changes will be lost when you re-run the
@@ -11,9 +11,10 @@ pragma Style_Checks ("NM32766");
 ---------------------------------------------------
 
 with CorbaCBSG.CBSG.Impl;
+with CorbaCBSG.Helper;
+with PolyORB.Any;
 with CORBA;
 pragma Elaborate_All (CORBA);
-with PolyORB.Any;
 with CORBA.ServerRequest;
 with CORBA.NVList;
 with PolyORB.CORBA_P.IR_Hooks;
@@ -33,7 +34,7 @@ with PolyORB.Initialization;
 package body CorbaCBSG.CBSG.Skel is
 
    N_Operations : constant PolyORB.Std.Natural :=
-     9;
+     10;
 
    type String_Ptr is
      access PolyORB.Std.String;
@@ -91,6 +92,41 @@ package body CorbaCBSG.CBSG.Skel is
       Argument_List_Ü : CORBA.NVList.Ref;
       Index_Ü : PolyORB.Std.Natural;
       Invoke_Name_Access : String_Ptr;
+
+      procedure Invoke_createTimestampedSentence;
+
+      --------------------------------------
+      -- Invoke_createTimestampedSentence --
+      --------------------------------------
+
+      procedure Invoke_createTimestampedSentence is
+         Result_Ü : CorbaCBSG.timestamped_Sentence;
+         pragma Warnings (Off, Result_Ü);
+         pragma Suppress (Validity_Check, Result_Ü);
+         Arg_CC_Result_Ü_Ü : aliased PolyORB.Any.Content'Class :=
+           CorbaCBSG.Helper.Internals.Wrap
+              (Result_Ü'Unrestricted_Access);
+         Arg_Any_Result_Ü_Ü : constant CORBA.Any :=
+           CORBA.Internals.Get_Wrapper_Any
+              (CorbaCBSG.Helper.TC_timestamped_Sentence,
+               Arg_CC_Result_Ü_Ü'Unchecked_Access);
+      begin
+         --  Processing request
+         CORBA.ServerRequest.Arguments
+           (Request,
+            Argument_List_Ü);
+         --  Call Implementation
+         Result_Ü :=
+           CorbaCBSG.CBSG.Impl.createTimestampedSentence
+              (CorbaCBSG.CBSG.Impl.Object'Class
+                 (Self.all)'Access);
+         --  Setting the result
+         CORBA.ServerRequest.Set_Result
+           (Request,
+            Arg_Any_Result_Ü_Ü);
+         CORBA.NVList.Internals.Clone_Out_Args
+           (Argument_List_Ü);
+      end Invoke_createTimestampedSentence;
 
       procedure Invoke_createSentence;
 
@@ -334,21 +370,23 @@ package body CorbaCBSG.CBSG.Skel is
       begin
          case Index_Ü is
             when 0 =>
-               Invoke_createSentence;
+               Invoke_createTimestampedSentence;
             when 1 =>
-               Invoke_createWorkshop;
+               Invoke_createSentence;
             when 2 =>
-               Invoke_createShortWorkshop;
+               Invoke_createWorkshop;
             when 3 =>
-               Invoke_createFinancialReport;
-            when 5 =>
-               Invoke_Uinterface;
-            when 6 =>
-               Invoke_Udomain_managers;
-            when 7
-               | 8 =>
-               Invoke_Unon_existent;
+               Invoke_createShortWorkshop;
             when 4 =>
+               Invoke_createFinancialReport;
+            when 6 =>
+               Invoke_Uinterface;
+            when 7 =>
+               Invoke_Udomain_managers;
+            when 8
+               | 9 =>
+               Invoke_Unon_existent;
+            when 5 =>
                Invoke_Uis_a;
             pragma Warnings (Off);
             when others =>
@@ -417,6 +455,8 @@ package body CorbaCBSG.CBSG.Skel is
          Servant_Is_A'Access,
          Is_A'Access,
          Invoke'Access);
+      Register_Procedure
+        ("createTimestampedSentence");
       Register_Procedure
         ("createSentence");
       Register_Procedure

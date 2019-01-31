@@ -2,8 +2,8 @@ pragma Style_Checks ("NM32766");
 
 ---------------------------------------------------
 --  This file has been generated automatically from
---  ../../../cbsg.idl
---  by IAC (IDL to Ada Compiler) 19.0w (rev. e4bac8d9).
+--  cbsg.idl
+--  by IAC (IDL to Ada Compiler) 20.0w (rev. 90136cd4).
 ---------------------------------------------------
 --  NOTE: If you modify this file by hand, your
 --  changes will be lost when you re-run the
@@ -11,6 +11,7 @@ pragma Style_Checks ("NM32766");
 ---------------------------------------------------
 
 with PolyORB.Any.NVList;
+with CorbaCBSG.Helper;
 with PolyORB.Any;
 with PolyORB.Requests;
 with PolyORB.Types;
@@ -18,6 +19,78 @@ with PolyORB.CORBA_P.Interceptors_Hooks;
 with PolyORB.CORBA_P.Exceptions;
 
 package body CorbaCBSG.CBSG is
+
+   createTimestampedSentence_Result_Name_Ü : constant PolyORB.Types.Identifier :=
+     PolyORB.Types.To_PolyORB_String
+        ("Result");
+
+   ----------------------------------------
+   -- createTimestampedSentence_Result_Ü --
+   ----------------------------------------
+
+   function createTimestampedSentence_Result_Ü return PolyORB.Any.NamedValue is
+      pragma Inline (createTimestampedSentence_Result_Ü);
+   begin
+      return (Name => createTimestampedSentence_Result_Name_Ü,
+      Argument => CORBA.Internals.Get_Empty_Any
+        (CorbaCBSG.Helper.TC_timestamped_Sentence),
+      Arg_Modes => 0);
+   end createTimestampedSentence_Result_Ü;
+
+   -------------------------------
+   -- createTimestampedSentence --
+   -------------------------------
+
+   function createTimestampedSentence
+     (Self : Ref)
+     return CorbaCBSG.timestamped_Sentence
+   is
+      Argument_List_Ü : PolyORB.Any.NVList.Ref;
+      Result_Ü : CorbaCBSG.timestamped_Sentence;
+      pragma Warnings (Off, Result_Ü);
+      pragma Suppress (Validity_Check, Result_Ü);
+      Arg_CC_Result_Ü_Ü : aliased PolyORB.Any.Content'Class :=
+        CorbaCBSG.Helper.Internals.Wrap
+           (Result_Ü'Unrestricted_Access);
+      Request_Ü : aliased PolyORB.Requests.Request;
+      Result_Nv_Ü : PolyORB.Any.NamedValue :=
+        createTimestampedSentence_Result_Ü;
+   begin
+      if CORBA.Object.Is_Nil
+        (CORBA.Object.Ref
+           (Self))
+      then
+         CORBA.Raise_Inv_Objref
+           (CORBA.Default_Sys_Member);
+      end if;
+      --  Create the Argument list
+      PolyORB.Any.NVList.Create
+        (Argument_List_Ü);
+      --  Setting the result value
+      PolyORB.Any.Set_Value
+        (PolyORB.Any.Get_Container
+           (Result_Nv_Ü.Argument).all,
+         Arg_CC_Result_Ü_Ü'Unrestricted_Access);
+      --  Creating the request
+      PolyORB.Requests.Setup_Request
+        (Req => Request_Ü,
+         Target => CORBA.Object.Internals.To_PolyORB_Ref
+           (CORBA.Object.Ref
+              (Self)),
+         Operation => "createTimestampedSentence",
+         Arg_List => Argument_List_Ü,
+         Result => Result_Nv_Ü);
+      --  Invoking the request (synchronously or asynchronously)
+      PolyORB.CORBA_P.Interceptors_Hooks.Client_Invoke
+        (Request_Ü'Access,
+         PolyORB.Requests.Flags
+           (0));
+      --  Raise exception, if needed
+      PolyORB.CORBA_P.Exceptions.Request_Raise_Occurrence
+        (Request_Ü);
+      --  Return value
+      return Result_Ü;
+   end createTimestampedSentence;
 
    createSentence_Result_Name_Ü : constant PolyORB.Types.Identifier :=
      PolyORB.Types.To_PolyORB_String

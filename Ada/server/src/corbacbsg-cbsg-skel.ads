@@ -4,7 +4,7 @@ pragma Wide_Character_Encoding (Brackets);
 ---------------------------------------------------
 --  This file has been generated automatically from
 --  cbsg.idl
---  by IAC (IDL to Ada Compiler) 19.0w (rev. e4bac8d9).
+--  by IAC (IDL to Ada Compiler) 20.0w (rev. 90136cd4).
 ---------------------------------------------------
 --  NOTE: If you modify this file by hand, your
 --  changes will be lost when you re-run the

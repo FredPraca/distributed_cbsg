@@ -14,6 +14,22 @@ static const char* _0RL_library_version = omniORB_4_2;
 
 
 
+void
+CorbaCBSG::timestamped_Sentence::operator>>= (cdrStream &_n) const
+{
+  timestamp >>= _n;
+  _n.marshalString(sentence,0);
+
+}
+
+void
+CorbaCBSG::timestamped_Sentence::operator<<= (cdrStream &_n)
+{
+  (::CORBA::Long&)timestamp <<= _n;
+  sentence = _n.unmarshalString(0);
+
+}
+
 CorbaCBSG::CBSG_ptr CorbaCBSG::CBSG_Helper::_nil() {
   return ::CorbaCBSG::CBSG::_nil();
 }
@@ -119,15 +135,80 @@ CorbaCBSG::_objref_CBSG::_ptrToObjRef(const char* id)
 
 
 //
+// Code for CorbaCBSG::CBSG::createTimestampedSentence
+
+// Proxy call descriptor class. Mangled signature:
+//  _cCorbaCBSG_mtimestamped__Sentence
+class _0RL_cd_3ac58ef165fd2494_00000000
+  : public omniCallDescriptor
+{
+public:
+  inline _0RL_cd_3ac58ef165fd2494_00000000(LocalCallFn lcfn, const char* op_, size_t oplen, _CORBA_Boolean upcall=0)
+    : omniCallDescriptor(lcfn, op_, oplen, 0, _user_exns, 0, upcall)
+  {
+    
+  }
+  
+  
+  void unmarshalReturnedValues(cdrStream&);
+  void marshalReturnedValues(cdrStream&);
+  
+  
+  static const char* const _user_exns[];
+
+  CorbaCBSG::timestamped_Sentence_var result;
+};
+
+void _0RL_cd_3ac58ef165fd2494_00000000::marshalReturnedValues(cdrStream& _n)
+{
+  (const CorbaCBSG::timestamped_Sentence&) result >>= _n;
+
+}
+
+void _0RL_cd_3ac58ef165fd2494_00000000::unmarshalReturnedValues(cdrStream& _n)
+{
+  result = new CorbaCBSG::timestamped_Sentence;
+  (CorbaCBSG::timestamped_Sentence&)result <<= _n;
+
+}
+
+const char* const _0RL_cd_3ac58ef165fd2494_00000000::_user_exns[] = {
+  0
+};
+
+// Local call call-back function.
+static void
+_0RL_lcfn_3ac58ef165fd2494_10000000(omniCallDescriptor* cd, omniServant* svnt)
+{
+  _0RL_cd_3ac58ef165fd2494_00000000* tcd = (_0RL_cd_3ac58ef165fd2494_00000000*)cd;
+  CorbaCBSG::_impl_CBSG* impl = (CorbaCBSG::_impl_CBSG*) svnt->_ptrToInterface(CorbaCBSG::CBSG::_PD_repoId);
+  tcd->result = impl->createTimestampedSentence();
+
+
+}
+
+CorbaCBSG::timestamped_Sentence* CorbaCBSG::_objref_CBSG::createTimestampedSentence()
+{
+  _0RL_cd_3ac58ef165fd2494_00000000 _call_desc(_0RL_lcfn_3ac58ef165fd2494_10000000, "createTimestampedSentence", 26);
+
+
+  _invoke(_call_desc);
+  return _call_desc.result._retn();
+
+
+}
+
+
+//
 // Code for CorbaCBSG::CBSG::createSentence
 
 // Proxy call descriptor class. Mangled signature:
 //  _cstring
-class _0RL_cd_76ae10493cea66c4_00000000
+class _0RL_cd_3ac58ef165fd2494_20000000
   : public omniCallDescriptor
 {
 public:
-  inline _0RL_cd_76ae10493cea66c4_00000000(LocalCallFn lcfn, const char* op_, size_t oplen, _CORBA_Boolean upcall=0)
+  inline _0RL_cd_3ac58ef165fd2494_20000000(LocalCallFn lcfn, const char* op_, size_t oplen, _CORBA_Boolean upcall=0)
     : omniCallDescriptor(lcfn, op_, oplen, 0, _user_exns, 0, upcall)
   {
     
@@ -143,27 +224,27 @@ public:
   ::CORBA::String_var result;
 };
 
-void _0RL_cd_76ae10493cea66c4_00000000::marshalReturnedValues(cdrStream& _n)
+void _0RL_cd_3ac58ef165fd2494_20000000::marshalReturnedValues(cdrStream& _n)
 {
   _n.marshalString(result,0);
 
 }
 
-void _0RL_cd_76ae10493cea66c4_00000000::unmarshalReturnedValues(cdrStream& _n)
+void _0RL_cd_3ac58ef165fd2494_20000000::unmarshalReturnedValues(cdrStream& _n)
 {
   result = _n.unmarshalString(0);
 
 }
 
-const char* const _0RL_cd_76ae10493cea66c4_00000000::_user_exns[] = {
+const char* const _0RL_cd_3ac58ef165fd2494_20000000::_user_exns[] = {
   0
 };
 
 // Local call call-back function.
 static void
-_0RL_lcfn_76ae10493cea66c4_10000000(omniCallDescriptor* cd, omniServant* svnt)
+_0RL_lcfn_3ac58ef165fd2494_30000000(omniCallDescriptor* cd, omniServant* svnt)
 {
-  _0RL_cd_76ae10493cea66c4_00000000* tcd = (_0RL_cd_76ae10493cea66c4_00000000*)cd;
+  _0RL_cd_3ac58ef165fd2494_20000000* tcd = (_0RL_cd_3ac58ef165fd2494_20000000*)cd;
   CorbaCBSG::_impl_CBSG* impl = (CorbaCBSG::_impl_CBSG*) svnt->_ptrToInterface(CorbaCBSG::CBSG::_PD_repoId);
   tcd->result = impl->createSentence();
 
@@ -172,7 +253,7 @@ _0RL_lcfn_76ae10493cea66c4_10000000(omniCallDescriptor* cd, omniServant* svnt)
 
 char* CorbaCBSG::_objref_CBSG::createSentence()
 {
-  _0RL_cd_76ae10493cea66c4_00000000 _call_desc(_0RL_lcfn_76ae10493cea66c4_10000000, "createSentence", 15);
+  _0RL_cd_3ac58ef165fd2494_20000000 _call_desc(_0RL_lcfn_3ac58ef165fd2494_30000000, "createSentence", 15);
 
 
   _invoke(_call_desc);
@@ -187,9 +268,9 @@ char* CorbaCBSG::_objref_CBSG::createSentence()
 
 // Local call call-back function.
 static void
-_0RL_lcfn_76ae10493cea66c4_20000000(omniCallDescriptor* cd, omniServant* svnt)
+_0RL_lcfn_3ac58ef165fd2494_40000000(omniCallDescriptor* cd, omniServant* svnt)
 {
-  _0RL_cd_76ae10493cea66c4_00000000* tcd = (_0RL_cd_76ae10493cea66c4_00000000*)cd;
+  _0RL_cd_3ac58ef165fd2494_20000000* tcd = (_0RL_cd_3ac58ef165fd2494_20000000*)cd;
   CorbaCBSG::_impl_CBSG* impl = (CorbaCBSG::_impl_CBSG*) svnt->_ptrToInterface(CorbaCBSG::CBSG::_PD_repoId);
   tcd->result = impl->createWorkshop();
 
@@ -198,7 +279,7 @@ _0RL_lcfn_76ae10493cea66c4_20000000(omniCallDescriptor* cd, omniServant* svnt)
 
 char* CorbaCBSG::_objref_CBSG::createWorkshop()
 {
-  _0RL_cd_76ae10493cea66c4_00000000 _call_desc(_0RL_lcfn_76ae10493cea66c4_20000000, "createWorkshop", 15);
+  _0RL_cd_3ac58ef165fd2494_20000000 _call_desc(_0RL_lcfn_3ac58ef165fd2494_40000000, "createWorkshop", 15);
 
 
   _invoke(_call_desc);
@@ -213,9 +294,9 @@ char* CorbaCBSG::_objref_CBSG::createWorkshop()
 
 // Local call call-back function.
 static void
-_0RL_lcfn_76ae10493cea66c4_30000000(omniCallDescriptor* cd, omniServant* svnt)
+_0RL_lcfn_3ac58ef165fd2494_50000000(omniCallDescriptor* cd, omniServant* svnt)
 {
-  _0RL_cd_76ae10493cea66c4_00000000* tcd = (_0RL_cd_76ae10493cea66c4_00000000*)cd;
+  _0RL_cd_3ac58ef165fd2494_20000000* tcd = (_0RL_cd_3ac58ef165fd2494_20000000*)cd;
   CorbaCBSG::_impl_CBSG* impl = (CorbaCBSG::_impl_CBSG*) svnt->_ptrToInterface(CorbaCBSG::CBSG::_PD_repoId);
   tcd->result = impl->createShortWorkshop();
 
@@ -224,7 +305,7 @@ _0RL_lcfn_76ae10493cea66c4_30000000(omniCallDescriptor* cd, omniServant* svnt)
 
 char* CorbaCBSG::_objref_CBSG::createShortWorkshop()
 {
-  _0RL_cd_76ae10493cea66c4_00000000 _call_desc(_0RL_lcfn_76ae10493cea66c4_30000000, "createShortWorkshop", 20);
+  _0RL_cd_3ac58ef165fd2494_20000000 _call_desc(_0RL_lcfn_3ac58ef165fd2494_50000000, "createShortWorkshop", 20);
 
 
   _invoke(_call_desc);
@@ -239,9 +320,9 @@ char* CorbaCBSG::_objref_CBSG::createShortWorkshop()
 
 // Local call call-back function.
 static void
-_0RL_lcfn_76ae10493cea66c4_40000000(omniCallDescriptor* cd, omniServant* svnt)
+_0RL_lcfn_3ac58ef165fd2494_60000000(omniCallDescriptor* cd, omniServant* svnt)
 {
-  _0RL_cd_76ae10493cea66c4_00000000* tcd = (_0RL_cd_76ae10493cea66c4_00000000*)cd;
+  _0RL_cd_3ac58ef165fd2494_20000000* tcd = (_0RL_cd_3ac58ef165fd2494_20000000*)cd;
   CorbaCBSG::_impl_CBSG* impl = (CorbaCBSG::_impl_CBSG*) svnt->_ptrToInterface(CorbaCBSG::CBSG::_PD_repoId);
   tcd->result = impl->createFinancialReport();
 
@@ -250,7 +331,7 @@ _0RL_lcfn_76ae10493cea66c4_40000000(omniCallDescriptor* cd, omniServant* svnt)
 
 char* CorbaCBSG::_objref_CBSG::createFinancialReport()
 {
-  _0RL_cd_76ae10493cea66c4_00000000 _call_desc(_0RL_lcfn_76ae10493cea66c4_40000000, "createFinancialReport", 22);
+  _0RL_cd_3ac58ef165fd2494_20000000 _call_desc(_0RL_lcfn_3ac58ef165fd2494_60000000, "createFinancialReport", 22);
 
 
   _invoke(_call_desc);
@@ -288,9 +369,17 @@ CorbaCBSG::_impl_CBSG::_dispatch(omniCallHandle& _handle)
 {
   const char* op = _handle.operation_name();
 
+  if (omni::strMatch(op, "createTimestampedSentence")) {
+
+    _0RL_cd_3ac58ef165fd2494_00000000 _call_desc(_0RL_lcfn_3ac58ef165fd2494_10000000, "createTimestampedSentence", 26, 1);
+    
+    _handle.upcall(this,_call_desc);
+    return 1;
+  }
+
   if (omni::strMatch(op, "createSentence")) {
 
-    _0RL_cd_76ae10493cea66c4_00000000 _call_desc(_0RL_lcfn_76ae10493cea66c4_10000000, "createSentence", 15, 1);
+    _0RL_cd_3ac58ef165fd2494_20000000 _call_desc(_0RL_lcfn_3ac58ef165fd2494_30000000, "createSentence", 15, 1);
     
     _handle.upcall(this,_call_desc);
     return 1;
@@ -298,7 +387,7 @@ CorbaCBSG::_impl_CBSG::_dispatch(omniCallHandle& _handle)
 
   if (omni::strMatch(op, "createWorkshop")) {
 
-    _0RL_cd_76ae10493cea66c4_00000000 _call_desc(_0RL_lcfn_76ae10493cea66c4_20000000, "createWorkshop", 15, 1);
+    _0RL_cd_3ac58ef165fd2494_20000000 _call_desc(_0RL_lcfn_3ac58ef165fd2494_40000000, "createWorkshop", 15, 1);
     
     _handle.upcall(this,_call_desc);
     return 1;
@@ -306,7 +395,7 @@ CorbaCBSG::_impl_CBSG::_dispatch(omniCallHandle& _handle)
 
   if (omni::strMatch(op, "createShortWorkshop")) {
 
-    _0RL_cd_76ae10493cea66c4_00000000 _call_desc(_0RL_lcfn_76ae10493cea66c4_30000000, "createShortWorkshop", 20, 1);
+    _0RL_cd_3ac58ef165fd2494_20000000 _call_desc(_0RL_lcfn_3ac58ef165fd2494_50000000, "createShortWorkshop", 20, 1);
     
     _handle.upcall(this,_call_desc);
     return 1;
@@ -314,7 +403,7 @@ CorbaCBSG::_impl_CBSG::_dispatch(omniCallHandle& _handle)
 
   if (omni::strMatch(op, "createFinancialReport")) {
 
-    _0RL_cd_76ae10493cea66c4_00000000 _call_desc(_0RL_lcfn_76ae10493cea66c4_40000000, "createFinancialReport", 22, 1);
+    _0RL_cd_3ac58ef165fd2494_20000000 _call_desc(_0RL_lcfn_3ac58ef165fd2494_60000000, "createFinancialReport", 22, 1);
     
     _handle.upcall(this,_call_desc);
     return 1;

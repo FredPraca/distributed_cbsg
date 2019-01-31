@@ -3,7 +3,8 @@ with Ada.Text_IO;
 with CORBA.ORB;
  
 with CorbaCBSG.CBSG;
- 
+with CorbaCBSG; use CorbaCBSG;
+
 with PolyORB.Setup.Client;
 pragma Warnings (Off, PolyORB.Setup.Client);
  
@@ -14,7 +15,8 @@ procedure Client is
  
    Rcvd_Bullshits : CORBA.String;
    Bullshit_Generator : CorbaCBSG.CBSG.Ref;
- 
+   Timestamped_Bullshit : timestamped_Sentence;
+   
 begin
    CORBA.ORB.Initialize ("ORB");
    if Argument_Count not in 1 .. 2 then
@@ -37,6 +39,10 @@ begin
    Rcvd_Bullshits := CorbaCBSG.CBSG.createSentence(Bullshit_Generator);
    Put_Line ("The generator said : " & CORBA.To_Standard_String (Rcvd_Bullshits));
  
+   Timestamped_Bullshit := CorbaCBSG.CBSG.createTimestampedSentence(Bullshit_Generator);
+   Put_Line ("At " & Timestamped_Bullshit.timestamp'Image
+             & ", the generator said : " 
+             & CORBA.to_Standard_String (Timestamped_Bullshit.sentence));   
 exception
    when E : CORBA.Transient =>
       declare

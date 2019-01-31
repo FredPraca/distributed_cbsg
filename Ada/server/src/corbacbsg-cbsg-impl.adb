@@ -10,19 +10,37 @@ pragma Unreferenced (CorbaCBSG.CBSG.Skel);
 
 with Corporate_Bullshit;
 
+with Ada.Calendar.Conversions; use Ada.Calendar.Conversions;
+with Ada.Calendar;
+
 package body CorbaCBSG.CBSG.Impl is
 
    package Simple_Generator is new  Corporate_Bullshit(Paragraph_Mark => "",
-						       Paragraph_End_Mark => "",
-						       Dialog_Mark => "");
+                                                       Paragraph_End_Mark => "",
+                                                       Dialog_Mark => "");
    
+   -------------------------------
+   -- createTimestampedSentence --
+   -------------------------------
+   
+   function createTimestampedSentence
+     (Self : not null access Object)
+      return CorbaCBSG.timestamped_Sentence
+   is
+      Result : CorbaCBSG.Timestamped_Sentence := 
+        (Timestamp => CORBA.Long (To_Unix_Time(Ada.Calendar.Clock)), 
+         Sentence => CORBA.To_CORBA_String(Simple_Generator.Sentence));
+   begin
+      return Result;
+   end createTimestampedSentence;
+
    --------------------
    -- createSentence --
    --------------------
 
    function createSentence
      (Self : not null access Object)
-     return CORBA.String
+      return CORBA.String
    is
       Generated_Sentence : String := Simple_Generator.Sentence;
    begin
@@ -35,7 +53,7 @@ package body CorbaCBSG.CBSG.Impl is
 
    function createWorkshop
      (Self : not null access Object)
-     return CORBA.String
+      return CORBA.String
    is
       Generated_Sentence : String := Simple_Generator.Workshop;
    begin
@@ -48,7 +66,7 @@ package body CorbaCBSG.CBSG.Impl is
 
    function createShortWorkshop
      (Self : not null access Object)
-     return CORBA.String
+      return CORBA.String
    is
       Generated_Sentence : String := Simple_Generator.Short_Workshop;
    begin
@@ -61,7 +79,7 @@ package body CorbaCBSG.CBSG.Impl is
 
    function createFinancialReport
      (Self : not null access Object)
-     return CORBA.String
+      return CORBA.String
    is
       Generated_Sentence : String := Simple_Generator.Financial_Report;
    begin

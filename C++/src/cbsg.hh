@@ -56,6 +56,24 @@ _CORBA_MODULE CorbaCBSG
 
 _CORBA_MODULE_BEG
 
+  struct timestamped_Sentence {
+    typedef _CORBA_ConstrType_Variable_Var<timestamped_Sentence> _var_type;
+
+    
+    ::CORBA::Long timestamp;
+
+    ::CORBA::String_member sentence;
+
+  
+
+    void operator>>= (cdrStream &) const;
+    void operator<<= (cdrStream &);
+  };
+
+  typedef timestamped_Sentence::_var_type timestamped_Sentence_var;
+
+  typedef _CORBA_ConstrType_Variable_OUT_arg< timestamped_Sentence,timestamped_Sentence_var > timestamped_Sentence_out;
+
 #ifndef __CorbaCBSG_mCBSG__
 #define __CorbaCBSG_mCBSG__
   class CBSG;
@@ -124,6 +142,7 @@ _CORBA_MODULE_BEG
   {
   public:
     // IDL operations
+    timestamped_Sentence* createTimestampedSentence();
     char* createSentence();
     char* createWorkshop();
     char* createShortWorkshop();
@@ -162,6 +181,7 @@ _CORBA_MODULE_BEG
   public:
     virtual ~_impl_CBSG();
 
+    virtual timestamped_Sentence* createTimestampedSentence() = 0;
     virtual char* createSentence() = 0;
     virtual char* createWorkshop() = 0;
     virtual char* createShortWorkshop() = 0;

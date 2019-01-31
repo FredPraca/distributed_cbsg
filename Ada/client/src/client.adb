@@ -6,6 +6,9 @@ with CORBA.Object;
 
 with CorbaCBSG.CBSG;
 with CorbaCBSG.CBSG.Helper;
+with CorbaCBSG; use CorbaCBSG;
+
+>>>>>>> master
 with PolyORB.Setup.Client;
 pragma Warnings (Off, PolyORB.Setup.Client);
 
@@ -17,6 +20,8 @@ procedure Client is
    use type CORBA.String;
  
    Rcvd_Bullshits : CORBA.String;
+   Timestamped_Bullshit : timestamped_Sentence;
+
    Bullshit_Generator : CorbaCBSG.CBSG.Ref;
    
    Obj_Name : constant String := "/cbsg/generator";
@@ -45,6 +50,10 @@ begin
    Rcvd_Bullshits := CorbaCBSG.CBSG.createSentence(Bullshit_Generator);
    Put_Line ("The generator said : " & CORBA.To_Standard_String (Rcvd_Bullshits));
  
+   Timestamped_Bullshit := CorbaCBSG.CBSG.createTimestampedSentence(Bullshit_Generator);
+   Put_Line ("At " & Timestamped_Bullshit.timestamp'Image
+             & ", the generator said : " 
+             & CORBA.to_Standard_String (Timestamped_Bullshit.sentence));   
 exception
    when E : CORBA.Transient =>
       declare

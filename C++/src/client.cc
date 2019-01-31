@@ -89,7 +89,10 @@ int main(int argc, char** argv)
       
       // And go, call the method
       cout << "The generator said : " << cbsgRef->createSentence() << endl;
-      
+ 
+      CorbaCBSG::timestamped_Sentence_var timestampedBullshit = cbsgRef->createTimestampedSentence();
+      cout << "At " << timestampedBullshit->timestamp << ", the generator said " << timestampedBullshit->sentence << endl;
+    
       // Then we stop the ORB
       orb->destroy(); 
     }

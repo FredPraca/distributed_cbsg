@@ -1,8 +1,13 @@
 module CorbaCBSG
 {
-
+  struct timestamped_Sentence {
+    long timestamp;
+    string sentence;
+  };
+  
   interface CBSG
   {
+    timestamped_Sentence createTimestampedSentence();
     string createSentence();
     string createWorkshop();
     string createShortWorkshop();

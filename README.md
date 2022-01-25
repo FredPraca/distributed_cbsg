@@ -4,8 +4,6 @@ This repository contains the code used to introduce CORBA with Ada at the FOSDEM
 
 You can view my presentation, slides and references on [the dedicated page](https://fosdem.org/2019/schedule/event/ada_distribution/) of the FOSDEM or on [Youtube](https://www.youtube.com/watch?v=qdns5O6qyDY).
 
-For those interested in a more open source video platform, [the video](https://peertube.social/videos/watch/4b4e0352-910e-4b75-8504-41c11235a743) is also available on my [Ada channel](https://peertube.social/video-channels/ada_presentations/videos) on Peertube.
-
 ## Goal
 
 The goal of this presentation is to show how to transform an application or library into a distributed application that can be run across different machines on a network.
